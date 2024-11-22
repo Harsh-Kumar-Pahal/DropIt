@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure File Sharing App</title>
+    <script type="module" src="main.js">
+        
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .hidden { display: none; }
+        .container {
+            max-width: 100%;
+            margin: auto;
+            padding: 20px;
+        }
+        .auth-switch {
+            text-align: center;
+            margin-top: 15px;
+        }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        button{
+            background-color: rgb(0, 127, 225);
+            color: white;
+            text-shadow: 1px 1px 2px rgb(0, 45, 128);
+            cursor: pointer;
+        }
+
+        button:hover{
+            background-color: rgb(2, 91, 180);
+            box-shadow: 2px 2px 1px rgb(0, 45, 128) inset;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .auth-section, .file-share-section {
+            display: block;
+        }
+        .file-share-section {
+            display: none;
+        }
+        #receiverStatus {
+            margin-left: 10px;
+            font-size: 0.9rem;
+        }
+
+        #loginForm , #registerForm {
+    position: absolute; /* Use absolute positioning */
+    top: 50%; /* Move it to the middle vertically */
+    left: 50%; /* Move it to the middle horizontally */
+    transform: translate(-50%, -50%); /* Adjust position to truly center it */
+    width: 350px; /* Keep the specified width */
+    background-color: #ffffff; /* Optional: Add a background color */
+    padding: 20px; /* Optional: Add padding */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for aesthetics */
+    text-align: center;
+}
+
+#fileShareSection {
+    position: absolute; /* Use absolute positioning */
+    top: 20%; /* Move it to the middle vertically */
+    left: 50%; /* Move it to the middle horizontally */
+    transform: translate(-50%, -50%); /* Adjust position to truly center it */
+    width: 350px; /* Keep the specified width */
+    text-align: center;
+}
+
+
+        @media (max-width: 600px) {
+            h2 {
+                font-size: 1.25rem;
+            }
+            input, button {
+                padding: 10px;
+            }
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="authSection">
+        <div id="loginForm">
+            <h2>Login</h2>
+            <input type="email" id="loginEmailInput" placeholder="Email">
+            <input type="password" id="loginPasswordInput" placeholder="Password">
+            <button onclick="login()">Login</button>
+            <div class="auth-switch">
+                <p>Don't have an account? <a href="#" onclick="showRegisterForm()">Register</a></p>
+            </div>
+        </div>
+
+        <div id="registerForm" class="hidden">
+            <h2>Register</h2>
+            <input type="text" id="registerNameInput" placeholder="Full Name">
+            <input type="email" id="registerEmailInput" placeholder="Email">
+            <input type="password" id="registerPasswordInput" placeholder="Password">
+            <button onclick="register()">Register</button>
+            <div class="auth-switch">
+                <p>Already have an account? <a href="#" onclick="showLoginForm()">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="fileShareSection" class="hidden">
+        <h2>File Sharing</h2>
+        <p id="userWelcome"></p>
+        <input type="file" id="fileInput">
+        <input type="email" id="receiverEmail" placeholder="Receiver's Email">
+        <span id="receiverStatus"></span>
+        <button onclick="sendFile()">Send File</button>
+        <div id="incomingFiles"></div>
+    </div>
+</body>
+</html>
