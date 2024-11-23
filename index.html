@@ -3,128 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure File Sharing App</title>
-    <script type="module" src="main.js">
-        
-    </script>
+    <title>AirShare - Secure File Sharing</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <script type="module" src="main.js"></script>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-        .hidden { display: none; }
-        .container {
-            max-width: 100%;
-            margin: auto;
-            padding: 20px;
-        }
-        .auth-switch {
-            text-align: center;
-            margin-top: 15px;
-        }
-        input, button {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            box-sizing: border-box;
-        }
-
-        button{
-            background-color: rgb(0, 127, 225);
-            color: white;
-            text-shadow: 1px 1px 2px rgb(0, 45, 128);
-            cursor: pointer;
-        }
-
-        button:hover{
-            background-color: rgb(2, 91, 180);
-            box-shadow: 2px 2px 1px rgb(0, 45, 128) inset;
-        }
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-        .auth-section, .file-share-section {
-            display: block;
-        }
-        .file-share-section {
-            display: none;
-        }
-        #receiverStatus {
-            margin-left: 10px;
-            font-size: 0.9rem;
-        }
-
-        #loginForm , #registerForm {
-    position: absolute; /* Use absolute positioning */
+        #mainBox{
+            position: absolute; /* Use absolute positioning */
     top: 50%; /* Move it to the middle vertically */
     left: 50%; /* Move it to the middle horizontally */
     transform: translate(-50%, -50%); /* Adjust position to truly center it */
-    width: 350px; /* Keep the specified width */
-    background-color: #ffffff; /* Optional: Add a background color */
-    padding: 20px; /* Optional: Add padding */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for aesthetics */
-    text-align: center;
-}
-
-#fileShareSection {
-    position: absolute; /* Use absolute positioning */
-    top: 20%; /* Move it to the middle vertically */
-    left: 50%; /* Move it to the middle horizontally */
-    transform: translate(-50%, -50%); /* Adjust position to truly center it */
-    width: 350px; /* Keep the specified width */
-    text-align: center;
-}
-
-
-        @media (max-width: 600px) {
-            h2 {
-                font-size: 1.25rem;
-            }
-            input, button {
-                padding: 10px;
-            }
-            .container {
-                padding: 10px;
-            }
         }
     </style>
 </head>
-<body>
-    <div id="authSection">
-        <div id="loginForm">
-            <h2>Login</h2>
-            <input type="email" id="loginEmailInput" placeholder="Email">
-            <input type="password" id="loginPasswordInput" placeholder="Password">
-            <button onclick="login()">Login</button>
-            <div class="auth-switch">
-                <p>Don't have an account? <a href="#" onclick="showRegisterForm()">Register</a></p>
-            </div>
+<body class="bg-gray-100 ">
+    
+    <div class="navBar">
+        <div style="display: flex; justify-content: space-between; align-items: center; background-color: white; padding: 10px; margin-bottom: 10px;">
+            <h2 class="text-2xl font-bold text-blue-600">DropIt</h2>
+            <button onclick="logout()" 
+                class="bg-red-500 text-white px-4 py-2 hover:bg-red-600 transition">
+                Logout
+            </button>
         </div>
-
-        <div id="registerForm" class="hidden">
-            <h2>Register</h2>
-            <input type="text" id="registerNameInput" placeholder="Full Name">
-            <input type="email" id="registerEmailInput" placeholder="Email">
-            <input type="password" id="registerPasswordInput" placeholder="Password">
-            <button onclick="register()">Register</button>
-            <div class="auth-switch">
-                <p>Already have an account? <a href="#" onclick="showLoginForm()">Login</a></p>
+        
+        <div class="w-full max-w-md bg-white p-8 shadow-md" id="mainBox">
+            <div id="authSection">
+                <div id="loginForm" class="space-y-4">
+                    <h2 class="text-2xl font-bold text-center">AirShare Login</h2>
+                    <input type="email" id="loginEmailInput" placeholder="Email" 
+                        class="w-full p-2 border  focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="password" id="loginPasswordInput" placeholder="Password" 
+                        class="w-full p-2 border  focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p id="loginError" class="text-red-500 text-sm text-center"></p>
+                    <button onclick="login()" 
+                        class="w-full bg-blue-500 text-white p-2  hover:bg-blue-600 transition">Login</button>
+                    <div class="text-center">
+                        <p>Don't have an account? <a href="#" onclick="showRegisterForm()" 
+                            class="text-blue-500 hover:underline">Register</a></p>
+                    </div>
+                </div>
+    
+                <div id="registerForm" class="hidden space-y-4">
+                    <h2 class="text-2xl font-bold text-center">AirShare Register</h2>
+                    <input type="text" id="registerNameInput" placeholder="Full Name"class="w-full p-2 border  focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="email" id="registerEmailInput" placeholder="Email" 
+                        class="w-full p-2 border  focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="password" id="registerPasswordInput" placeholder="Password" 
+                        class="w-full p-2 border  focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p id="registerError" class="text-red-500 text-sm text-center"></p>
+                    <button onclick="register()" 
+                        class="w-full bg-green-500 text-white p-2  hover:bg-green-600 transition">Register</button>
+                    <div class="text-center">
+                        <p>Already have an account? <a href="#" onclick="showLoginForm()" 
+                            class="text-blue-500 hover:underline">Login</a></p>
+                    </div>
+                </div>
+            </div>
+    
+            <div id="fileShareSection" class="hidden">
+                
+                <p id="userWelcome" class="text-green-600 mb-4 bg-green-100 p-1" style="text-align: center;"></p>
+                <div class="space-y-4">
+                    <div class="border-2 border-dashed border-blue-500 p-10 text-center bg-blue-50">
+                        <label for="fileInput" class="cursor-pointer">
+                            <div class="space-y-2">
+                                <i class="fa-regular fa-folder-open fa-2xl" style="color: #005eff;"></i>
+                                <p class="text-gray-600">Click to select or drag and drop files here</p>
+                                <p class="text-sm text-gray-500">Supports all file types</p>
+                            </div>
+                            <input type="file" id="fileInput" class="hidden">
+                        </label>
+                    </div>
+    
+                    <div class="flex space-x-2">
+                        <input type="email" id="receiverEmail" placeholder="Receiver's address" 
+                            class="flex-grow p-2 border  focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <span id="receiverStatus" class="self-center font-bold px-2 bg-red-50 text-red-500">offline</span>
+                    </div>
+    
+                    <div id="progressContainer" class="hidden space-y-2">
+                        <div class="w-full bg-gray-200 -full h-2.5">
+                            <div id="progressBar" class="bg-blue-600 h-2.5 -full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                        <p id="progressText" class="text-sm text-gray-600 text-center">0%</p>
+                    </div>
+    
+                    <button id="sendButton" onclick="sendFile()" 
+                        class="w-full bg-blue-600 text-white p-2  hover:bg-blue-700 transition flex items-center justify-center space-x-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                        </svg>
+                        <span>Send File</span>
+                    </button>
+                </div>
+    
+                <div class="mt-8">
+                    <div id="incomingFiles" class="space-y-4">
+                        <!-- Incoming files will be displayed here -->
+                    </div>
+                </div>
+    
+                <!-- File Transfer Status Modal -->
+                <div id="transferModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div class="bg-white p-6 max-w-md w-full">
+                        <h3 class="text-lg font-bold mb-4" id="transferModalTitle">File Transfer</h3>
+                        <div class="space-y-4">
+                            <div class="w-full bg-gray-200 -full h-2.5">
+                                <div id="transferModalProgress" class="bg-blue-600 h-2.5 -full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                            <p id="transferModalStatus" class="text-center text-gray-600"></p>
+                            <button onclick="document.getElementById('transferModal').classList.add('hidden')" 
+                                class="w-full bg-gray-500 text-white p-2  hover:bg-gray-600 transition">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    
 
-    <div id="fileShareSection" class="hidden">
-        <h2>File Sharing</h2>
-        <p id="userWelcome"></p>
-        <input type="file" id="fileInput">
-        <input type="email" id="receiverEmail" placeholder="Receiver's Email">
-        <span id="receiverStatus"></span>
-        <button onclick="sendFile()">Send File</button>
-        <div id="incomingFiles"></div>
-    </div>
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="fixed bottom-4 right-4 space-y-2"></div>
+
+    <script src="utilites.js"></script>
 </body>
 </html>
